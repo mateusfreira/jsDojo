@@ -1,0 +1,11 @@
+{
+  "name": "dojoJs",
+  "description": "A base project to dojo js",
+  "author": "mateus.freira@gmail.com",
+  "dependencies": {
+    "grunt"         : "~0.4.0",
+    "grunt-contrib-jasmine" : "~0.5.1",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
