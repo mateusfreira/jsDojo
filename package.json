@@ -2,6 +2,7 @@
   "name": "dojoJs",
   "description": "A base project to dojo js",
   "author": "mateus.freira@gmail.com",
+  "scripts": { "test": "grunt test" },
   "dependencies": {
     "grunt"         : "~0.4.0",
     "grunt-contrib-jasmine" : "~0.5.1",
