@@ -16,5 +16,5 @@ Behavior-driven development framework
 [<img src="http://pivotal.github.io/jasmine/images/jasmine_logo.png">](http://pivotal.github.io/jasmine/)
 
 Platform
-[<img src="http://nodejs.org/images/logo.png">](http://nodejs.org/)
+[<img src="https://github-camo.global.ssl.fastly.net/28f0c2a6d0f24881d08eecd8adeaa9fab60d3c9a/687474703a2f2f6e6f64656a732e6f72672f6c6f676f732f6e6f64656a732e706e67>](http://nodejs.org/)
 
