@@ -4,4 +4,5 @@ var Jogo = function(){
 	this.gol = function(time){
 		time.pontos++;
 	};
+
 };
