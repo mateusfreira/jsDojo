@@ -32,7 +32,7 @@ module.exports = function(grunt) {
     watch: {
        pivotal : {
             files: [specsPath, srcPath], 
-            tasks: ['jshint','jasmine']
+            tasks: ['jshint','jasmine', 'uglify']
         }
     }
   });
