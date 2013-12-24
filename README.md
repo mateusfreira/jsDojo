@@ -45,14 +45,22 @@ Platform<br/>
 ======
 Roteiro
 
-08:00 as 08:15 - Introdução as tecnologias(JavaScript, Node, Grunt, Phantomjs, Jasmine) 
+08:00 as 08:15 - Introdução as tecnologias(JavaScript, Node, Grunt, Phantomjs, Jasmine).
+
 08:15 as 08:45 - Apresentação da dinâmica, do problema e discursão sobre formas de implementação (Planing).
+
 08:45 as 08:50 - Preparando para começar.
-08:50 as 09:40 - RandoriKata(1)
-09:40 as 09:50 - Discursão(Estamos no caminho certo?)
-09:50 as 10:40 - RandoriKata(2)
+
+08:50 as 09:40 - RandoriKata(1).
+
+09:40 as 09:50 - Discursão(Estamos no caminho certo?).
+
+09:50 as 10:40 - RandoriKata(2).
+
 .....
-               - RandoriKata(n)
+
+               - RandoriKata(n).
+               
 
 ======
 Regras
