@@ -1,5 +1,4 @@
 var Jogo = function(){
-<<<<<<< HEAD
     var _tabuleiro;
     this.init = function() {
         _tabuleiro = [];
@@ -116,12 +115,3 @@ var Rei = function(cor){
 };
 
 Rei.prototype = Peca;
-=======
-	this.time1 = {pontos : 0};
-	this.time2 = {pontos : 0};
-	this.gol = function(time){
-		time.pontos++;
-	};
-
-};
->>>>>>> eb2954de11a73227d6278837adfc178d1491e598
