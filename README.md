@@ -206,10 +206,3 @@ Regras do jogo de xadrez  [Reparem que eu disse REGRAS (Por hora não nos preocu
 
 	Abandono	
  
-
-
-
-
-
-
-

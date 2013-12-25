@@ -14,7 +14,7 @@ var Jogo = function(){
             _tabuleiro[linha][7] = new Torre(cor);
 
             _tabuleiro[linha][1] = new Cavalo(cor);
-            _tabuleiro[linha][6] = new Cavalo(cor); 
+            _tabuleiro[linha][6] = new Cavalo(cor);
 
             _tabuleiro[linha][2] = new Bispo(cor);
             _tabuleiro[linha][5] = new Bispo(cor);
@@ -26,10 +26,10 @@ var Jogo = function(){
 
             for (i = 0; i < 8; i++) {
                 _tabuleiro[linhaPeao][i] = new Peao(cor);
-            }   
-                
+            }
+
         };
-        
+
         inicializa(0, Cor.BRANCA);
         inicializa(7, Cor.PRETA);
     };

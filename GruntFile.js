@@ -5,6 +5,8 @@ module.exports = function(grunt) {
   grunt.initConfig({
     uglify: {
       options: {
+        mangle: false,
+        report : 'min',
         // the banner is inserted at the top of the output
         banner: '/*! <%= grunt.template.today("dd-mm-yyyy") %> */\n'
       },
