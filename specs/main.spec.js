@@ -1,12 +1,16 @@
 describe("No inicio do jogo", function() {
   var jogo = new Jogo();
   jogo.init();
+  
+	//This ensures that the board has the proper dimensions.
     it("O tabuleiro deve ter 64 casas 8X8", function() {
         expect(jogo.tabuleiro().length).toEqual(8);
         for(var i=0; i<8; i++){
             expect(jogo.tabuleiro()[i].length).toEqual(8);
         }
     });
+	
+	//These make sure each chess piece has a color and is either "BRANCA" or "PRETA"
     it("class peao deve manter a cor", function() {
         var preto = new Peao(Cor.PRETA);
         expect(preto.cor()).toEqual(Cor.PRETA);
@@ -49,6 +53,8 @@ describe("No inicio do jogo", function() {
 describe("No inicio do jogo", function() {
     var jogo = new Jogo();
     jogo.init();
+	
+	//These ensure that the white rooks are in their proper starting positions
     it("valida posicao A1 (0, 0), que deve conter uma torre branca", function() {
         peca = jogo.posicao(0,0);
         expect(peca instanceof Torre).toBe(true);
@@ -61,6 +67,7 @@ describe("No inicio do jogo", function() {
         expect(peca.cor()).toBe(Cor.BRANCA);
     });
 
+	//These ensure that the white knights are in their proper starting positions	
     it("valida posicao B1 (0, 1), que deve conter uma CAVALO branca", function() {
         peca = jogo.posicao(0,1);
         expect(peca instanceof Cavalo).toBe(true);
@@ -71,6 +78,8 @@ describe("No inicio do jogo", function() {
         expect(peca instanceof Cavalo).toBe(true);
         expect(peca.cor()).toBe(Cor.BRANCA);
     });
+
+	//These ensure that the white bishops are in their proper starting positions
     it("valida posicao C1 (0, 2), que deve conter uma bispo branca", function() {
         peca = jogo.posicao(0,2);
         expect(peca instanceof Bispo).toBe(true);
@@ -81,6 +90,8 @@ describe("No inicio do jogo", function() {
         expect(peca instanceof Bispo).toBe(true);
         expect(peca.cor()).toBe(Cor.BRANCA);
     });
+	
+	//These ensure that the white King and Queen are in their proper starting positions
     it("valida posicao D1 (0, 3), que deve conter uma rainha branca", function() {
         peca = jogo.posicao(0,3);
         expect(peca instanceof Rainha).toBe(true);
@@ -91,6 +102,8 @@ describe("No inicio do jogo", function() {
         expect(peca instanceof Rei).toBe(true);
         expect(peca.cor()).toBe(Cor.BRANCA);
     });
+	
+	//This ensures that the white pawns are in their proper starting positions.
     it("valida as posições dos peões brancos", function() {
         for (var i = 0; i < 8; i++) {
             peca = jogo.posicao(1,i);
@@ -99,6 +112,7 @@ describe("No inicio do jogo", function() {
         }
     });
 
+	//These ensure that the black rooks are in their proper starting positions
     it("valida posicao A8 (7, 0), que deve conter uma torre preta", function() {
         peca = jogo.posicao(7,0);
         expect(peca instanceof Torre).toBe(true);
@@ -111,6 +125,7 @@ describe("No inicio do jogo", function() {
         expect(peca.cor()).toBe(Cor.PRETA);
     });
 
+	//These ensure that the black knights are in their proper starting positions
     it("valida posicao B8 (7, 1), que deve conter uma CAVALO preta", function() {
         peca = jogo.posicao(7,1);
         expect(peca instanceof Cavalo).toBe(true);
@@ -121,6 +136,8 @@ describe("No inicio do jogo", function() {
         expect(peca instanceof Cavalo).toBe(true);
         expect(peca.cor()).toBe(Cor.PRETA);
     });
+	
+	//These ensure that the black bishops are in their proper starting positions
     it("valida posicao C8 (7, 2), que deve conter uma bispo preta", function() {
         peca = jogo.posicao(7,2);
         expect(peca instanceof Bispo).toBe(true);
@@ -131,6 +148,8 @@ describe("No inicio do jogo", function() {
         expect(peca instanceof Bispo).toBe(true);
         expect(peca.cor()).toBe(Cor.PRETA);
     });
+	
+	//These ensure that the black King and Queen are in their proper starting positions
     it("valida posicao D8 (7, 3), que deve conter uma rainha preta", function() {
         peca = jogo.posicao(7,3);
         expect(peca instanceof Rainha).toBe(true);
@@ -141,6 +160,8 @@ describe("No inicio do jogo", function() {
         expect(peca instanceof Rei).toBe(true);
         expect(peca.cor()).toBe(Cor.PRETA);
     });
+	
+	//These ensure that the black pawns are in their proper starting positions
     it("valida as posições dos peões pretos", function() {
         for (var i = 0; i < 8; i++) {
             peca = jogo.posicao(6,i);
@@ -148,6 +169,8 @@ describe("No inicio do jogo", function() {
             expect(peca.cor()).toBe(Cor.PRETA);
         }
     });
+	
+	//This ensures that all other positions in the board are empty.
     it("Valida as posicoes Vazia", function(){
        for (var i = 2; i < 6; i++) {
             for (var j = 0; j < 8; j++) {
