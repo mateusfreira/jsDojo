@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         report : 'min',
         // the banner is inserted at the top of the output
         banner: '/*! <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-      },
+      }, 
       dist: {
         files: {
           'dist/main.min.js': ['src/*']
