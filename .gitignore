@@ -11,5 +11,6 @@ pids
 logs
 results
 build
+coverage
 
 node_modules

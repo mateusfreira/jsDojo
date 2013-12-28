@@ -1,5 +1,5 @@
 //Main class. Contains all the information about the board state.
-var Jogo = function(){
+var Jogo = function(){ 
 	//A game of chess must have a chess board.
 	//It is declared as a private attribute of the class, and is treated as an 8x8 grid of pieces and nulls.
     var _tabuleiro;
