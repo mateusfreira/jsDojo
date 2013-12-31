@@ -8,7 +8,6 @@ var Jogo = function(){
     this.init = function() {
 		//This command makes _tabuleiro an array.
         _tabuleiro = [];
-		
 		//This cycle makes the positions 0-7 of _tabuleiro arrays in themselves (thus making a grid) 
         for (var i = 0; i < 8; i++) {
             _tabuleiro[i] = [];
