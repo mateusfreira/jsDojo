@@ -1,4 +1,4 @@
-describe("No inicio do jogo", function() {
+describe("Valida o tabuleiro e a existencia das peças", function() {
   var jogo = new Jogo();
   jogo.init();
   
@@ -50,9 +50,12 @@ describe("No inicio do jogo", function() {
     });
 });
 
-describe("No inicio do jogo", function() {
-    var jogo = new Jogo();
-    jogo.init();
+describe("No inicio do jogo valida as posições inicias das peças.", function() {
+    var jogo;
+    beforeEach(function() {
+        jogo = new Jogo();
+        jogo.init();
+    });
 	
 	//These ensure that the white rooks are in their proper starting positions
     it("valida posicao A1 (0, 0), que deve conter uma torre branca", function() {
@@ -165,11 +168,18 @@ describe("No inicio do jogo", function() {
     it("valida as posições dos peões pretos", function() {
         for (var i = 0; i < 8; i++) {
             peca = jogo.posicao(6,i);
-            expect(peca instanceof Peao).toBe(true);
+
             expect(peca.cor()).toBe(Cor.PRETA);
         }
     });
 	
+    it('O metodo posicao pode setar o novo objeto de peça', function () {
+        Helper.limpaTabuleiro(jogo);
+        var peca = new Peao(Cor.PRETA);
+        jogo.posicao(2,2, peca);
+        expect(jogo.posicao(2,2)).toBe(peca); 
+    });
+
 	//This ensures that all other positions in the board are empty.
     it("Valida as posicoes Vazia", function(){
        for (var i = 2; i < 6; i++) {
@@ -179,6 +189,66 @@ describe("No inicio do jogo", function() {
             }
         } 
     });
-    
 
 });
+
+describe('Durante o jogo ', function () {
+    var jogo = null;
+    beforeEach(function(){
+        jogo = new Jogo();
+        jogo.init();
+    });
+
+    it('Não posso mover uma posição sem peças', function() {
+        Helper.limpaTabuleiro(jogo);
+        expect(function(){jogo.move([3,3], [4,4]);}).toThrow();
+    });
+
+    it('Jogo precisa implementar metodo move ', function() {
+        expect(jogo.move).not.toEqual(undefined);
+    });
+
+    it('Não posso mover para uma posição fora do tabuleiro', function() {
+        Helper.limpaTabuleiro(jogo);
+        jogo.posicao(2,2, new Peao(Cor.BRANCA));
+        jogo.posicao(3,2, new Rainha(Cor.BRANCA));
+        expect(function(){jogo.move([3,2], [8,2]);}).toThrow();
+    });    
+    it('nao pode pegar uma peça em uma posição que nao existe', function () {
+        expect(function(){jogo.posicao(7,8)}).toThrow();
+        expect(function(){jogo.posicao(8,7)}).toThrow();
+        expect(function(){jogo.posicao(8,8)}).toThrow();
+        expect(function(){jogo.posicao(-7,-8)}).toThrow();
+
+    });
+     it('Nao posse mover para uma posicao onde tenha uma peca da mesmo cor que a peca de origem', function() {
+        Helper.limpaTabuleiro(jogo);
+        jogo.posicao(2,2, new Peao(Cor.BRANCA));
+        jogo.posicao(3,2, new Rainha(Cor.BRANCA));
+        expect(function(){jogo.move([2,2], [3,2]);}).toThrow();
+    });
+
+    it('Nao pode mover para a origem', function () {
+        Helper.limpaTabuleiro(jogo);
+        jogo.tabuleiro()[2][2] = new Torre(Cor.BRANCA);                
+        expect(function(){
+            jogo.move([2,2],[2,2]);            
+        }).toThrow();       
+    });
+
+    it('Uma peça antes de mover deve ter sua flag movimentada falta', function () {
+        Helper.limpaTabuleiro(jogo);
+        var rei = new Rei(Cor.BRANCA);
+        jogo.posicao(2,2, rei);
+        expect(rei.movimentada()).toEqual(false);
+    })
+
+    it('Uma peça apos mover deve ter sua flag movimentada atualizada', function () {
+        Helper.limpaTabuleiro(jogo);
+        var rei = new Rei(Cor.BRANCA);
+        jogo.posicao(2,2, rei);
+        jogo.move([2,2], [3,3]),
+        expect(rei.movimentada()).toEqual(true);
+    })
+});
+

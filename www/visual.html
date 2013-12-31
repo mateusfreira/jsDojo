@@ -1,0 +1,41 @@
+<html data-ng-app='JogoApp'>
+	<header>
+		<style>
+			body{
+				width: 100%;
+			}
+			.linha{
+				width: 100%;
+				display: block;
+				float: left;
+			}
+			.preta{
+				background-color: black;
+				color: #ffffff;
+			}
+			.casa{
+				width: 12%;
+				float: left;
+				display: block;
+				height: 12%;
+				border: 1px solid;
+			}
+		</style>
+		<script src='angular.js'>
+		</script>
+		<script src='adapeter.js'>
+		</script>		
+		<script src='../src/main.js'>
+		</script>
+	</header>
+	<body data-ng-controller='JogoCtrl'>
+		<div class='linha' data-ng-repeat='(i, linha) in tabuleiro'>
+			<a href="#" class='casa' data-ng-repeat='(j, casa) in linha'>
+				<span data-ng-class='casa.cor()' data-ng-click='move([i, j])'>
+					{{casa|peca}}
+				</span>
+			</a>
+			<br/>
+		</div>
+	</body>
+</html>
