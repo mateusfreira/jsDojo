@@ -31,10 +31,8 @@ JogoApp.filter('peca', function () {
     		return "Rainha";	
     	}else if(item  instanceof Peao){
     		return "Peao";	
-    	}else if(item.cor){
-    		return "A";
     	}else{
-    		return " - ";
+    		return "  ";
     	}
     	
     }

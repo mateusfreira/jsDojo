@@ -88,7 +88,7 @@ var Jogo = function(){
             throw new Error("Existe uma peça da mesma cor na posição de destino.");
         }
 
-        peca.move(posicaoInicial, posicalFinal);
+        peca.move(posicaoInicial, posicalFinal, this);
         peca.movimentada(true);
         this.posicao(posicalFinal[X],posicalFinal[Y], peca);
         this.posicao(posicaoInicial[X],posicaoInicial[Y], {});
@@ -149,6 +149,14 @@ var Peao = function(cor){
 	//This command calls Peca's constructor, using the value of (cor) given when creating a new Peao.
 	//It is used multiple times, so that each piece has the same basic constructor.
     this.init(cor);
+    this.move = function(posicaoInicial, posicaoFinal, jogo){
+        var validoParaFrente = (posicaoFinal[X] - posicaoInicial[X]) === 1 && (posicaoFinal[Y] == posicaoInicial[Y]);
+
+        var validoDiagonal = (((posicaoFinal[X] - posicaoInicial[X]) === 1) && ((posicaoFinal[Y]-posicaoInicial[Y]) === 1) && (jogo.posicao(posicaoFinal[X], posicaoFinal[Y]) !== null) );
+        if(!validoDiagonal && !validoParaFrente){
+            throw new Error("Movimento invalido");
+        }
+    };
 };
 
 //This command makes "peao" a son of "peca," but it DOES NOT make it inherit any attributes or methods.
@@ -163,7 +171,7 @@ var Torre = function(cor){
     Peca.call(this);
     this.init(cor);
 
-    this.move = function(posicaoInicial, posicaoFinal, tabuleiro){
+    this.move = function(posicaoInicial, posicaoFinal, jogo){
         if(posicaoInicial[X] !== posicaoFinal[X] && posicaoInicial[Y] !== posicaoFinal[Y]){
             throw new Error('Movimento invalido');
         }
@@ -184,7 +192,7 @@ var Cavalo = function(cor){
 var Bispo = function(cor){
     Peca.call(this);
     this.init(cor);
-    this.move = function(posicaoInicial, posicaoFinal, tabuleiro){
+    this.move = function(posicaoInicial, posicaoFinal, jogo){
         if(Math.abs(posicaoInicial[X] - posicaoFinal[X]) !== Math.abs(posicaoInicial[Y] - posicaoFinal[Y])){
             throw new Error('Movimento invalido');
         }
@@ -198,7 +206,7 @@ var Rainha = function(cor){
     Peca.call(this);
     this.init(cor);
 
-    this.move = function(posicaoInicial, posicaoFinal, tabuleiro){
+    this.move = function(posicaoInicial, posicaoFinal, jogo){
         var movimentoHorizontalValido = (posicaoInicial[X] === posicaoFinal[X] || posicaoInicial[Y] === posicaoFinal[Y]), 
             movimentoDiagonalValido = (Math.abs(posicaoInicial[X] - posicaoFinal[X]) === Math.abs(posicaoInicial[Y] - posicaoFinal[Y]));
         if(!(movimentoDiagonalValido || movimentoHorizontalValido)){
@@ -214,7 +222,7 @@ var Rainha = function(cor){
 var Rei = function(cor){
     Peca.call(this);
     this.init(cor);
-    this.move = function(posicaoInicial, posicaoFinal, tabuleiro){
+    this.move = function(posicaoInicial, posicaoFinal, jogo){
         var movimentoXmenorQueDois = (Math.abs(posicaoFinal[X] - posicaoInicial[X]) <= 1 && Math.abs(posicaoFinal[Y] - posicaoInicial[Y]) <= 1);
         if(!movimentoXmenorQueDois) {
             throw new Error('Movimento invalido!');

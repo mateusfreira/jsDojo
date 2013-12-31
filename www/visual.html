@@ -12,6 +12,8 @@
 			.preta{
 				background-color: black;
 				color: #ffffff;
+				width: 100%;
+				height: 100%;
 			}
 			.linha:nth-child(2n) .casa:nth-child(2n){
 				background-color: #FCD30E;
@@ -33,8 +35,8 @@
 	</header>
 	<body data-ng-controller='JogoCtrl'>
 		<div class='linha' data-ng-repeat='(i, linha) in tabuleiro'>
-			<a href="#" class='casa' data-ng-repeat='(j, casa) in linha'>
-				<span data-ng-class='casa.cor()' data-ng-click='move([i, j])'>
+			<a href="#" class='casa' data-ng-repeat='(j, casa) in linha'  data-ng-click='move([i, j])'>
+				<span data-ng-class='casa.cor()'>
 					{{casa|peca}}
 				</span>
 			</a>
