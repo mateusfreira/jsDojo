@@ -131,7 +131,8 @@ function Peca(cor){
     };
 
     this.movimentada = function (movimentada) { 
-        return _movimentada = movimentada === true ? true : _movimentada;
+        _movimentada = movimentada === true ? true : _movimentada;
+        return _movimentada;
     };
 
     //funciona da esqueda p direita e cima para baixo :(
@@ -143,8 +144,8 @@ function Peca(cor){
             }
             destino[Y]      = destino[Y] > posicaoInicial[Y] ? destino[Y]-1 : posicaoInicial[Y];
             destino[X]      = destino[X] > posicaoInicial[X] ? destino[X]-1 : posicaoInicial[X];
-        } while(destino[X] > posicaoInicial[X] || destino[Y] > posicaoInicial[Y])
-    };
+        } while(destino[X] > posicaoInicial[X] || destino[Y] > posicaoInicial[Y]);
+    }
 };
 
 //Class which defines a typical chess pawn.
@@ -185,7 +186,7 @@ function Peao(cor){
         if(!validoDiagonal && !validoParaFrente){
             throw new Error("Movimento invalido");
         }
-    };
+    }
 };
 
 //This command makes "peao" a son of "peca," but it DOES NOT make it inherit any attributes or methods.
@@ -205,7 +206,7 @@ function Torre(cor){
             throw new Error('Movimento invalido');
         }
         
-    };
+    }
 };
 
 //Torre.prototype = Peca;
@@ -214,7 +215,7 @@ function Torre(cor){
 function Cavalo(cor){
     Peca.call(this, cor);
     
-};
+}
 
 //Cavalo.prototype = Peca;
 
@@ -227,8 +228,8 @@ function Bispo(cor){
             throw new Error('Movimento invalido');
         }
         
-    };
-};
+    }
+}
 
 //Bispo.prototype = Peca;
 
@@ -244,8 +245,8 @@ function Rainha(cor){
             throw new Error('Movimento invalido!');
         }
                 
-    };
-};
+    }
+}
 
 //Rainha.prototype = Peca;
 
@@ -259,8 +260,8 @@ function Rei(cor){
             throw new Error('Movimento invalido!');
         }
         
-    };
-};
+    }
+}
 
 //Rei.prototype = Peca;
 
