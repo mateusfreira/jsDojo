@@ -15,7 +15,7 @@
 				width: 100%;
 				height: 100%;
 			}
-			.linha:nth-child(2n) .casa:nth-child(2n){
+			.preto{
 				background-color: #FCD30E;
 			}
 			.casa{
@@ -28,14 +28,16 @@
 		</style>
 		<script src='angular.js'>
 		</script>
-		<script src='adapeter.js'>
+		<script src='adapter.js'>
 		</script>		
 		<script src='../src/main.js'>
 		</script>
 	</header>
 	<body data-ng-controller='JogoCtrl'>
-		<div class='linha' data-ng-repeat='(i, linha) in tabuleiro'>
-			<a href="#" class='casa' data-ng-repeat='(j, casa) in linha'  data-ng-click='move([i, j])'>
+		<div class='linha' data-ng-repeat='(i, linha) in tabuleiro track by $index'>
+			<a href="#" class='casa' data-ng-repeat='(j, casa) in linha track by $index' data-ng-class-odd="getOddClass(i)"
+			data-ng-class-even="getEvenClass(i)"
+			 data-ng-click='move([i, j])'>
 				<span data-ng-class='casa.cor()'>
 					{{casa|peca}}
 				</span>
