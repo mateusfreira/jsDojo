@@ -45,9 +45,17 @@ describe("Valida os movimentos da peao", function () {
         expect(jogo.posicao(2,3)).not.toEqual(peao);
     });
 
+    it('Peao pode mover duas casas se nao tiver movido', function(){
+        expect(function(){
+            jogo.move([2,2], [4,2]);
+        }).not.toThrow();
+        expect(jogo.posicao(4,2)).toEqual(peao);
+        expect(jogo.posicao(2,2)).not.toEqual(peao);
+    });
+
     it('Peao nao pode mover duas ou mais casas', function(){
         expect(function(){
-            jogo.move([2,2], [4,2]);            
+            jogo.move([2,2], [5,2]);            
         }).toThrow();
         expect(jogo.posicao(2,2)).toEqual(peao);
         expect(jogo.posicao(4,2)).not.toEqual(peao);

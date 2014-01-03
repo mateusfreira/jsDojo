@@ -60,6 +60,7 @@ var Jogo = function(){
         inicializa(0, Cor.BRANCA);
         inicializa(7, Cor.PRETA);
     };
+        
     this.posicao = function(i, j, peca){
         if(i< 0 || i > 7 || j < 0 || j > 7) {
             throw new Error("Posição não existe");
@@ -179,7 +180,7 @@ function Peao(cor){
 
     this.move = function(posicaoInicial, posicaoFinal, jogo){
         var validoParaFrente = validaMovimentoCor(posicaoInicial, posicaoFinal, jogo.posicao(posicaoFinal[X], posicaoFinal[Y]));
-        this.verificaCaminho(posicaoInicial, posicaoFinal, jogo);
+        
         var validoDiagonal = (((posicaoFinal[X] - posicaoInicial[X]) === 1) && ((posicaoFinal[Y]-posicaoInicial[Y]) === 1) && (jogo.posicao(posicaoFinal[X], posicaoFinal[Y]) !== null) );
         if(!validoDiagonal && !validoParaFrente){
             throw new Error("Movimento invalido");
@@ -203,7 +204,7 @@ function Torre(cor){
         if(posicaoInicial[X] !== posicaoFinal[X] && posicaoInicial[Y] !== posicaoFinal[Y]){
             throw new Error('Movimento invalido');
         }
-        this.verificaCaminho(posicaoInicial, posicaoFinal, jogo);
+        
     };
 };
 
@@ -225,7 +226,7 @@ function Bispo(cor){
         if(Math.abs(posicaoInicial[X] - posicaoFinal[X]) !== Math.abs(posicaoInicial[Y] - posicaoFinal[Y])){
             throw new Error('Movimento invalido');
         }
-        this.verificaCaminho(posicaoInicial, posicaoFinal, jogo);
+        
     };
 };
 
@@ -242,7 +243,7 @@ function Rainha(cor){
         if(!(movimentoDiagonalValido || movimentoHorizontalValido)){
             throw new Error('Movimento invalido!');
         }
-        this.verificaCaminho(posicaoInicial, posicaoFinal, jogo);        
+                
     };
 };
 
@@ -257,7 +258,7 @@ function Rei(cor){
         if(!movimentoXmenorQueDois) {
             throw new Error('Movimento invalido!');
         }
-        this.verificaCaminho(posicaoInicial, posicaoFinal, jogo);
+        
     };
 };
 
