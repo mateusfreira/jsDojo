@@ -241,7 +241,7 @@ describe('Durante o jogo ', function () {
         var rei = new Rei(Cor.BRANCA);
         jogo.posicao(2,2, rei);
         expect(rei.movimentada()).toEqual(false);
-    })
+    });
 
     it('Uma peça apos mover deve ter sua flag movimentada atualizada', function () {
         Helper.limpaTabuleiro(jogo);
@@ -249,6 +249,71 @@ describe('Durante o jogo ', function () {
         jogo.posicao(2,2, rei);
         jogo.move([2,2], [3,3]),
         expect(rei.movimentada()).toEqual(true);
-    })
+    });
+
+    it('Primeiro o jogador de peças brancas joga', function () {
+        expect(function(){
+            jogo.move([1, 0], [2, 0]);
+        }).not.toThrow();
+    });
+
+    it('As jogadas devem ser alternadas entre peças brancas e pretas', function () {
+        expect(function(){
+            jogo.move([6, 0], [5, 0]);
+        }).toThrow();
+        
+        expect(function(){
+            jogo.move([1, 0], [2, 0]);
+        }).not.toThrow();
+    });
+
+    describe('Nenhuma peça (exceto o cavalo) pode pular outras', function(){
+        beforeEach(function(){
+            jogo = new Jogo();
+            jogo.init();
+            Helper.limpaTabuleiro(jogo);
+
+            // posicionando peças a serem puladas
+            for (var i = 0; i < 3; i++) {                
+                for (var j = 0; j < 3; j++) {
+                    jogo.posicao(i, j, new Peao());
+                }    
+            }
+        });
+
+        var pecasHolder = [];
+
+        // Cada peça tem seu movimento valido
+        pecasHolder.push({
+            peca        : new Peao(Cor.BRANCA),
+            ondeMover   : [3, 1]
+        });
+        pecasHolder.push({
+            peca        : new Bispo(Cor.BRANCA),
+            ondeMover   : [3, 3]
+        });
+        pecasHolder.push({
+            peca        : new Rainha(Cor.BRANCA),
+            ondeMover   : [3, 1]
+        });
+        pecasHolder.push({
+            peca        : new Torre(Cor.BRANCA),
+            ondeMover   : [3, 1]
+        });
+
+        for(var i in pecasHolder){
+            var peca        = pecasHolder[i].peca;
+            var ondeMover   = pecasHolder[i].ondeMover;
+            it('A peça ' + peca.constructor.name + " não pode pular outras peças", function(){
+                // A peca a ser testada esta no meio das outras
+                // logo nao existe movimento valido
+                jogo.posicao(1, 1, peca);
+
+                expect(function(){
+                    jogo.posicao(ondeMover[0], ondeMover[1], peca);
+                }).toThrow();
+            });
+        }
+    });
 });
 

@@ -4,7 +4,8 @@ var Jogo = function(){
 	//A game of chess must have a chess board.
 	//It is declared as a private attribute of the class, and is treated as an 8x8 grid of pieces and nulls.
     var _tabuleiro;
-	
+
+	var proximaCor = Cor.BRANCA;
 	//The constructor for Jogo simply creates an empty chess board.
     this.init = function() {
 		//This command makes _tabuleiro an array.
@@ -15,7 +16,7 @@ var Jogo = function(){
 			
 			//This cycle makes all positions in the 8x8 grid null.
             for (var j = 0; j < 8; j++) {
-                _tabuleiro[i][j] = {};
+                _tabuleiro[i][j] = null;
             }
         }
 		
@@ -59,6 +60,7 @@ var Jogo = function(){
         inicializa(0, Cor.BRANCA);
         inicializa(7, Cor.PRETA);
     };
+        
     this.posicao = function(i, j, peca){
         if(i< 0 || i > 7 || j < 0 || j > 7) {
             throw new Error("Posição não existe");
@@ -81,8 +83,12 @@ var Jogo = function(){
     this.move = function(posicaoInicial, posicalFinal) {
         var peca = this.posicao(posicaoInicial[X],posicaoInicial[Y]);
         var pecaDestino = this.posicao(posicalFinal[X],posicalFinal[Y]);
+        var proximaCorTemp = proximaCor === Cor.BRANCA ? Cor.PRETA : Cor.BRANCA;
         if(peca === null) {
             throw new Error("Não existe peça na posicao origem.");
+        }
+        if(peca.cor() !== proximaCor){
+            throw new Error("Esta é a jogada da cor " + proximaCor + ".");
         }
         if(pecaDestino !== null && peca.cor() === pecaDestino.cor()) {
             throw new Error("Existe uma peça da mesma cor na posição de destino.");
@@ -91,7 +97,8 @@ var Jogo = function(){
         peca.move(posicaoInicial, posicalFinal, this);
         peca.movimentada(true);
         this.posicao(posicalFinal[X],posicalFinal[Y], peca);
-        this.posicao(posicaoInicial[X],posicaoInicial[Y], {});
+        this.posicao(posicaoInicial[X],posicaoInicial[Y], null);
+        proximaCor = proximaCorTemp;
     };
 
 };
@@ -112,17 +119,11 @@ var Cor  = {
 };
 
 //Class from which all other pieces inherit attributes.
-var Peca = function(){
+function Peca(cor){
 //All chess pieces have a color.
 //In this case, "cor" represents that color and is a private attribute 
-    var _cor;
+    var _cor = cor;
     var _movimentada = false;
-	
-	//The constructor (init) needs to recieve a color (cor) as a parameter.
-	//It then assigns the value of cor to _cor.
-    this.init = function(cor){
-        _cor = cor;
-    };
 	
 	//a "get_" type function, .cor() returns the value of the piece's color.
     this.cor = function() {
@@ -133,31 +134,60 @@ var Peca = function(){
         _movimentada = movimentada === true ? true : _movimentada;
         return _movimentada;
     };
-};
+
+    //funciona da esqueda p direita e cima para baixo :(
+    this.verificaCaminho = function(posicaoInicial, posicaoFinal, jogo){
+        var destino     = posicaoFinal.slice();
+        do {            
+            if(jogo.posicao(destino[X], destino[Y])){
+                throw new Error("Movimento invalido");
+            }
+            destino[Y]      = destino[Y] > posicaoInicial[Y] ? destino[Y]-1 : posicaoInicial[Y];
+            destino[X]      = destino[X] > posicaoInicial[X] ? destino[X]-1 : posicaoInicial[X];
+        } while(destino[X] > posicaoInicial[X] || destino[Y] > posicaoInicial[Y]);
+    };
+}
 
 //Class which defines a typical chess pawn.
 //TODO: 
 //-Add a flag to determine if a given pawn has already moved or not. Useful for the initial movement of two spaces.
 
-var Peao = function(cor){
+function Peao(cor){
 	
 	//This command makes the class "peao" inherit the attributes and methods of "peca."
 	//It is used multiple times, once for each type of chess piece,
 	//so that they all inherit the attributes found in "peca."
-    Peca.call(this);
+    Peca.call(this, cor);
 	
 	//This command calls Peca's constructor, using the value of (cor) given when creating a new Peao.
 	//It is used multiple times, so that each piece has the same basic constructor.
-    this.init(cor);
-    this.move = function(posicaoInicial, posicaoFinal, jogo){
-        var validoParaFrente = (posicaoFinal[X] - posicaoInicial[X]) === 1 && (posicaoFinal[Y] == posicaoInicial[Y]);
+    
 
+    var validaMovimentoCor = function(posicaoInicial, posicaoFinal, destino){
+        var mesmoY = posicaoFinal[Y] === posicaoInicial[Y];
+        var validoX;
+        var distanciaMaxima = this.movimentada() ? 1 : 2;
+        var distancia = posicaoFinal[X] - posicaoInicial[X];
+        if(this.cor() === Cor.BRANCA){
+            validoX = (distancia <= distanciaMaxima);
+        } else {
+            validoX = (distancia >= -distanciaMaxima && distancia < 0);
+            distancia = Math.abs(distancia);
+        }
+        return validoX && mesmoY && distancia > 0 && !destino;
+    };
+
+    validaMovimentoCor = validaMovimentoCor.bind(this);
+
+    this.move = function(posicaoInicial, posicaoFinal, jogo){
+        var validoParaFrente = validaMovimentoCor(posicaoInicial, posicaoFinal, jogo.posicao(posicaoFinal[X], posicaoFinal[Y]));
+        
         var validoDiagonal = (((posicaoFinal[X] - posicaoInicial[X]) === 1) && ((posicaoFinal[Y]-posicaoInicial[Y]) === 1) && (jogo.posicao(posicaoFinal[X], posicaoFinal[Y]) !== null) );
         if(!validoDiagonal && !validoParaFrente){
             throw new Error("Movimento invalido");
         }
     };
-};
+}
 
 //This command makes "peao" a son of "peca," but it DOES NOT make it inherit any attributes or methods.
 //Peao.prototype = Peca;
@@ -167,44 +197,46 @@ var Peao = function(cor){
 //Besides the regular movement rules, some sort of flag is necesarry to determine if a rook has moved
 //in order to determine if a Castling move can be made. It might be better to have the flag be an attribute of the chess board itself
 //(see observations below)
-var Torre = function(cor){
-    Peca.call(this);
-    this.init(cor);
+function Torre(cor){
+    Peca.call(this, cor);
+    
 
     this.move = function(posicaoInicial, posicaoFinal, jogo){
         if(posicaoInicial[X] !== posicaoFinal[X] && posicaoInicial[Y] !== posicaoFinal[Y]){
             throw new Error('Movimento invalido');
         }
+        
     };
-};
+}
 
 //Torre.prototype = Peca;
 
 //Class which defines a typical chess knight
-var Cavalo = function(cor){
-    Peca.call(this);
-    this.init(cor);
-};
+function Cavalo(cor){
+    Peca.call(this, cor);
+    
+}
 
 //Cavalo.prototype = Peca;
 
 //Class which defines a typical chess bishop.
-var Bispo = function(cor){
-    Peca.call(this);
-    this.init(cor);
+function Bispo(cor){
+    Peca.call(this, cor);
+    
     this.move = function(posicaoInicial, posicaoFinal, jogo){
         if(Math.abs(posicaoInicial[X] - posicaoFinal[X]) !== Math.abs(posicaoInicial[Y] - posicaoFinal[Y])){
             throw new Error('Movimento invalido');
         }
-    };
-};
+        
+    };  
+}
 
 //Bispo.prototype = Peca;
 
 //Class which defines a typical chess queen.
-var Rainha = function(cor){
-    Peca.call(this);
-    this.init(cor);
+function Rainha(cor){
+    Peca.call(this, cor);
+    
 
     this.move = function(posicaoInicial, posicaoFinal, jogo){
         var movimentoHorizontalValido = (posicaoInicial[X] === posicaoFinal[X] || posicaoInicial[Y] === posicaoFinal[Y]), 
@@ -212,16 +244,16 @@ var Rainha = function(cor){
         if(!(movimentoDiagonalValido || movimentoHorizontalValido)){
             throw new Error('Movimento invalido!');
         }
-        
+                
     };
-};
+}
 
 //Rainha.prototype = Peca;
 
 //Class which defines a typical chess king.
-var Rei = function(cor){
-    Peca.call(this);
-    this.init(cor);
+function Rei(cor){
+    Peca.call(this, cor);
+    
     this.move = function(posicaoInicial, posicaoFinal, jogo){
         var movimentoXmenorQueDois = (Math.abs(posicaoFinal[X] - posicaoInicial[X]) <= 1 && Math.abs(posicaoFinal[Y] - posicaoInicial[Y]) <= 1);
         if(!movimentoXmenorQueDois) {
@@ -229,7 +261,7 @@ var Rei = function(cor){
         }
         
     };
-};
+}
 
 //Rei.prototype = Peca;
 
@@ -237,3 +269,4 @@ var Rei = function(cor){
 //Handling of two special moves (Castling and En Passant capturing) might be made easier by the use of multiple flags related to
 //the current board state. This might suggest changing the board from being a relatively simple 8x8 grid of pieces and nulls to
 //being its own class with its own methods and attributes.
+
