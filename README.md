@@ -38,7 +38,7 @@ Web stack(No browser required)<br/>
 [<img src="http://phantomjs.org/img/phantomjs-logo.png">](http://phantomjs.org/)
 
 Behavior-driven development framework<br/>
-[<img src="http://pivotal.github.io/jasmine/images/jasmine_logo.png">](http://pivotal.github.io/jasmine/)
+[<img src="http://jasmine.github.io/jasmine/images/jasmine_logo.png">](https://jasmine.github.io/)
 
 Platform<br/>
 [<img src="https://github-camo.global.ssl.fastly.net/28f0c2a6d0f24881d08eecd8adeaa9fab60d3c9a/687474703a2f2f6e6f64656a732e6f72672f6c6f676f732f6e6f64656a732e706e67">](http://nodejs.org/)
